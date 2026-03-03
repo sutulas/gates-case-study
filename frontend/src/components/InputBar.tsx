@@ -1,41 +1,90 @@
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
 
-interface Props {
+interface InputBarProps {
   onSend: (text: string) => void
   disabled: boolean
 }
 
-export function InputBar({ onSend, disabled }: Props) {
-  const [text, setText] = useState('')
+export function InputBar({ onSend, disabled }: InputBarProps) {
+  const [value, setValue] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    const trimmed = text.trim()
+    const trimmed = value.trim()
     if (!trimmed || disabled) return
     onSend(trimmed)
-    setText('')
+    setValue('')
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="border-t border-gray-200 bg-white px-4 py-3 flex gap-2"
-    >
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Ask about your pregnancy..."
-        disabled={disabled}
-        className="flex-1 rounded-full border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-gray-100"
-      />
-      <button
-        type="submit"
-        disabled={disabled || !text.trim()}
-        className="bg-blue-600 text-white rounded-full px-5 py-2 text-sm font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+    <div style={{
+      borderTop: '1px solid var(--color-border)',
+      backgroundColor: 'var(--color-app-bg)',
+      padding: '16px 24px 20px',
+    }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          maxWidth: '680px',
+          margin: '0 auto',
+          display: 'flex',
+          alignItems: 'flex-end',
+          gap: '12px',
+          backgroundColor: 'var(--color-surface)',
+          border: '1px solid var(--color-border)',
+          borderRadius: '12px',
+          padding: '8px 8px 8px 16px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+        }}
       >
-        Send
-      </button>
-    </form>
+        <textarea
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value)
+            e.target.style.height = 'auto'
+            e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault()
+              handleSubmit(e as unknown as FormEvent)
+            }
+          }}
+          placeholder="Ask Amara about your pregnancy care..."
+          disabled={disabled}
+          rows={1}
+          style={{
+            flex: 1,
+            border: 'none',
+            outline: 'none',
+            resize: 'none',
+            fontSize: '15px',
+            lineHeight: '1.5',
+            color: 'var(--color-text-primary)',
+            backgroundColor: 'transparent',
+            padding: '4px 0',
+            fontFamily: 'inherit',
+          }}
+        />
+        <button
+          type="submit"
+          disabled={disabled || !value.trim()}
+          style={{
+            width: '36px', height: '36px', borderRadius: '8px', border: 'none',
+            backgroundColor: disabled || !value.trim() ? 'var(--color-border)' : 'var(--color-primary)',
+            color: disabled || !value.trim() ? 'var(--color-text-muted)' : '#FFFFFF',
+            cursor: disabled || !value.trim() ? 'not-allowed' : 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '16px', flexShrink: 0,
+            transition: 'background-color 0.15s',
+          }}
+        >
+          ↑
+        </button>
+      </form>
+      <p style={{ textAlign: 'center', fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '8px' }}>
+        Amara may make mistakes. Always consult your health worker for medical decisions.
+      </p>
+    </div>
   )
 }
