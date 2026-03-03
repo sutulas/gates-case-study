@@ -1,10 +1,11 @@
+import { Heart, MessageCircle, Info, BookOpen, ShieldAlert } from 'lucide-react'
 import type { Page } from '../App'
 
 const navItems = [
-  { page: 'chat' as Page, icon: '💬', label: 'Chat with Amara' },
-  { page: 'about' as Page, icon: 'ℹ️', label: 'About Amara' },
-  { page: 'resources' as Page, icon: '📋', label: 'ANC Resources' },
-  { page: 'safety' as Page, icon: '🚨', label: 'Safety Guide' },
+  { page: 'chat' as Page, icon: MessageCircle, label: 'Chat with Amara' },
+  { page: 'about' as Page, icon: Info, label: 'About Amara' },
+  { page: 'resources' as Page, icon: BookOpen, label: 'ANC Resources' },
+  { page: 'safety' as Page, icon: ShieldAlert, label: 'Safety Guide' },
 ]
 
 interface SidebarProps {
@@ -29,8 +30,9 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           <div style={{
             width: '36px', height: '36px', borderRadius: '10px',
             backgroundColor: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '18px'
-          }}>🤱</div>
+          }}>
+            <Heart size={18} color="#FFFFFF" fill="#FFFFFF" />
+          </div>
           <div>
             <div style={{ fontWeight: '600', color: 'var(--color-text-primary)', fontSize: '16px' }}>Amara</div>
             <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>ANC Assistant</div>
@@ -40,7 +42,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
 
       {/* Nav */}
       <nav style={{ flex: 1, padding: '12px 8px' }}>
-        {navItems.map(({ page, icon, label }) => {
+        {navItems.map(({ page, icon: Icon, label }) => {
           const isActive = currentPage === page
           return (
             <button
@@ -58,7 +60,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
                 transition: 'background-color 0.15s, color 0.15s',
               }}
             >
-              <span>{icon}</span>
+              <Icon size={16} />
               <span>{label}</span>
             </button>
           )

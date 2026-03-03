@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react'
+import { Heart, ArrowRight } from 'lucide-react'
 import type { Message } from '../types'
 import { MessageBubble } from './MessageBubble'
+
+const SUGGESTED_PROMPTS = [
+  'What happens at my first ANC visit?',
+  'How many check-ups do I need during pregnancy?',
+  'What vitamins should I take during pregnancy?',
+]
 
 interface ChatWindowProps {
   messages: Message[]
@@ -35,8 +42,10 @@ export function ChatWindow({ messages, isLoading }: ChatWindowProps) {
             width: '64px', height: '64px', borderRadius: '16px',
             backgroundColor: 'var(--color-primary)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '32px', marginBottom: '24px',
-          }}>🤱</div>
+            marginBottom: '24px',
+          }}>
+            <Heart size={32} color="#FFFFFF" fill="#FFFFFF" />
+          </div>
           <h2 style={{ fontSize: '24px', fontWeight: '600', color: 'var(--color-text-primary)', marginBottom: '8px' }}>
             Hello, I'm Amara
           </h2>
@@ -44,11 +53,7 @@ export function ChatWindow({ messages, isLoading }: ChatWindowProps) {
             I'm here to help you with questions about your antenatal care journey. Ask me about your appointments, what to expect, nutrition, or common pregnancy experiences.
           </p>
           <div style={{ marginTop: '32px', display: 'flex', flexDirection: 'column', gap: '8px', width: '100%', maxWidth: '480px' }}>
-            {[
-              'What happens at my first ANC visit?',
-              'How many check-ups do I need during pregnancy?',
-              'What vitamins should I take during pregnancy?',
-            ].map((prompt) => (
+            {SUGGESTED_PROMPTS.map((prompt) => (
               <div key={prompt} style={{
                 padding: '12px 16px', borderRadius: '8px',
                 border: '1px solid var(--color-border)',
@@ -56,8 +61,10 @@ export function ChatWindow({ messages, isLoading }: ChatWindowProps) {
                 color: 'var(--color-text-secondary)',
                 fontSize: '14px', cursor: 'default',
                 textAlign: 'left',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
-                {prompt}
+                <span>{prompt}</span>
+                <ArrowRight size={14} style={{ color: 'var(--color-text-muted)', flexShrink: 0 }} />
               </div>
             ))}
           </div>

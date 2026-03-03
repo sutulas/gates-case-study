@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { ArrowUp } from 'lucide-react'
 
 interface InputBarProps {
   onSend: (text: string) => void
@@ -15,6 +16,8 @@ export function InputBar({ onSend, disabled }: InputBarProps) {
     onSend(trimmed)
     setValue('')
   }
+
+  const isDisabled = disabled || !value.trim()
 
   return (
     <div style={{
@@ -68,18 +71,17 @@ export function InputBar({ onSend, disabled }: InputBarProps) {
         />
         <button
           type="submit"
-          disabled={disabled || !value.trim()}
+          disabled={isDisabled}
           style={{
             width: '36px', height: '36px', borderRadius: '8px', border: 'none',
-            backgroundColor: disabled || !value.trim() ? 'var(--color-border)' : 'var(--color-primary)',
-            color: disabled || !value.trim() ? 'var(--color-text-muted)' : '#FFFFFF',
-            cursor: disabled || !value.trim() ? 'not-allowed' : 'pointer',
+            backgroundColor: isDisabled ? 'var(--color-border)' : 'var(--color-primary)',
+            cursor: isDisabled ? 'not-allowed' : 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '16px', flexShrink: 0,
+            flexShrink: 0,
             transition: 'background-color 0.15s',
           }}
         >
-          ↑
+          <ArrowUp size={18} color={isDisabled ? 'var(--color-text-muted)' : '#FFFFFF'} />
         </button>
       </form>
       <p style={{ textAlign: 'center', fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '8px' }}>

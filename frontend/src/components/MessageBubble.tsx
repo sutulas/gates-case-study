@@ -1,3 +1,4 @@
+import { Heart, AlertTriangle } from 'lucide-react'
 import type { Message } from '../types'
 
 interface MessageBubbleProps {
@@ -21,7 +22,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
             display: 'flex', alignItems: 'center', gap: '8px',
             marginBottom: '8px', color: '#DC2626', fontWeight: '600', fontSize: '14px',
           }}>
-            <span>⚠️</span>
+            <AlertTriangle size={16} />
             <span>Urgent Safety Information</span>
           </div>
           <p style={{ color: '#7F1D1D', lineHeight: '1.6', margin: 0, fontSize: '15px' }}>
@@ -56,8 +57,10 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         width: '32px', height: '32px', borderRadius: '8px', flexShrink: 0,
         backgroundColor: 'var(--color-primary)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: '16px', marginTop: '2px',
-      }}>🤱</div>
+        marginTop: '2px',
+      }}>
+        <Heart size={16} color="#FFFFFF" fill="#FFFFFF" />
+      </div>
       <div style={{
         maxWidth: '75%',
         backgroundColor: 'var(--color-surface)',
