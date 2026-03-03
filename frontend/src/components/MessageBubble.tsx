@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
 import { Heart, AlertTriangle } from 'lucide-react'
 import type { Message } from '../types'
 
@@ -25,9 +27,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
             <AlertTriangle size={16} />
             <span>Urgent Safety Information</span>
           </div>
-          <p style={{ color: '#7F1D1D', lineHeight: '1.6', margin: 0, fontSize: '15px' }}>
-            {message.content}
-          </p>
+          <div style={{ color: '#7F1D1D', lineHeight: '1.6', fontSize: '15px' }} className="md-content">
+            <ReactMarkdown rehypePlugins={[rehypeRaw]}>{message.content}</ReactMarkdown>
+          </div>
         </div>
       </div>
     )
@@ -47,6 +49,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         }}>
           {message.content}
         </div>
+
       </div>
     )
   }
@@ -72,7 +75,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         color: 'var(--color-text-primary)',
         boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
       }}>
-        {message.content}
+        <div className="md-content">
+          <ReactMarkdown rehypePlugins={[rehypeRaw]}>{message.content}</ReactMarkdown>
+        </div>
       </div>
     </div>
   )
