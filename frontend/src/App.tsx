@@ -1,24 +1,32 @@
-import { SafetyBanner } from './components/SafetyBanner'
+import { useState } from 'react'
+import { Sidebar } from './components/Sidebar'
 import { ChatWindow } from './components/ChatWindow'
 import { InputBar } from './components/InputBar'
+import { AboutPage } from './pages/AboutPage'
+import { ResourcesPage } from './pages/ResourcesPage'
+import { SafetyPage } from './pages/SafetyPage'
 import { useChat } from './hooks/useChat'
 
+export type Page = 'chat' | 'about' | 'resources' | 'safety'
+
 function App() {
+  const [currentPage, setCurrentPage] = useState<Page>('chat')
   const { messages, isLoading, sendMessage } = useChat()
 
   return (
-    <div className="h-screen flex flex-col bg-white max-w-lg mx-auto border-x border-gray-200">
-      {/* Header */}
-      <header className="bg-blue-600 text-white px-4 py-3 text-center">
-        <h1 className="text-lg font-semibold">Amara</h1>
-        <p className="text-xs text-blue-100">
-          Your antenatal care information assistant
-        </p>
-      </header>
-
-      <SafetyBanner />
-      <ChatWindow messages={messages} isLoading={isLoading} />
-      <InputBar onSend={sendMessage} disabled={isLoading} />
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--color-app-bg)' }}>
+      <Sidebar currentPage={currentPage} onNavigate={setCurrentPage} />
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {currentPage === 'chat' && (
+          <>
+            <ChatWindow messages={messages} isLoading={isLoading} />
+            <InputBar onSend={sendMessage} disabled={isLoading} />
+          </>
+        )}
+        {currentPage === 'about' && <AboutPage />}
+        {currentPage === 'resources' && <ResourcesPage />}
+        {currentPage === 'safety' && <SafetyPage />}
+      </main>
     </div>
   )
 }
