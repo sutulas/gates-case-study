@@ -41,11 +41,12 @@ class ChatResponse(BaseModel):
 
 
 @app.get("/health")
+@app.get("/api/health")
 async def health():
     return {"status": "ok"}
 
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     conversation_id = request.conversation_id or str(uuid.uuid4())
 

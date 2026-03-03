@@ -19,7 +19,7 @@ function App() {
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {currentPage === 'chat' && (
           <>
-            <ChatWindow messages={messages} isLoading={isLoading} />
+            <ChatWindow messages={messages} isLoading={isLoading} onSend={sendMessage} />
             <InputBar onSend={sendMessage} disabled={isLoading} />
           </>
         )}
