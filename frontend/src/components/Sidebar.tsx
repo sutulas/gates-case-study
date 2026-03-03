@@ -2,10 +2,10 @@ import { Heart, MessageCircle, Info, BookOpen, ShieldAlert } from 'lucide-react'
 import type { Page } from '../App'
 
 const navItems = [
-  { page: 'chat' as Page, icon: MessageCircle, label: 'Chat with Amara' },
-  { page: 'about' as Page, icon: Info, label: 'About Amara' },
-  { page: 'resources' as Page, icon: BookOpen, label: 'ANC Resources' },
-  { page: 'safety' as Page, icon: ShieldAlert, label: 'Safety Guide' },
+  { page: 'chat' as Page, icon: MessageCircle, label: 'Chat' },
+  { page: 'about' as Page, icon: Info, label: 'About' },
+  { page: 'resources' as Page, icon: BookOpen, label: 'Resources' },
+  { page: 'safety' as Page, icon: ShieldAlert, label: 'Safety' },
 ]
 
 interface SidebarProps {
@@ -15,17 +15,9 @@ interface SidebarProps {
 
 export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
   return (
-    <aside style={{
-      width: '256px',
-      backgroundColor: 'var(--color-sidebar-bg)',
-      borderRight: '1px solid var(--color-sidebar-border)',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100vh',
-      flexShrink: 0,
-    }}>
-      {/* Logo */}
-      <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid var(--color-sidebar-border)' }}>
+    <aside className="sidebar">
+      {/* Logo — hidden on mobile */}
+      <div className="sidebar-logo">
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             width: '36px', height: '36px', borderRadius: '10px',
@@ -41,34 +33,21 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
       </div>
 
       {/* Nav */}
-      <nav style={{ flex: 1, padding: '12px 8px' }}>
-        {navItems.map(({ page, icon: Icon, label }) => {
-          const isActive = currentPage === page
-          return (
-            <button
-              key={page}
-              onClick={() => onNavigate(page)}
-              style={{
-                width: '100%', textAlign: 'left', padding: '10px 12px',
-                borderRadius: '8px', border: 'none', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', gap: '10px',
-                marginBottom: '2px',
-                backgroundColor: isActive ? 'var(--color-primary-light)' : 'transparent',
-                color: isActive ? 'var(--color-primary)' : 'var(--color-text-secondary)',
-                fontWeight: isActive ? '500' : '400',
-                fontSize: '14px',
-                transition: 'background-color 0.15s, color 0.15s',
-              }}
-            >
-              <Icon size={16} />
-              <span>{label}</span>
-            </button>
-          )
-        })}
+      <nav className="sidebar-nav">
+        {navItems.map(({ page, icon: Icon, label }) => (
+          <button
+            key={page}
+            onClick={() => onNavigate(page)}
+            className={`nav-btn${currentPage === page ? ' active' : ''}`}
+          >
+            <Icon size={16} />
+            <span>{label}</span>
+          </button>
+        ))}
       </nav>
 
-      {/* Footer */}
-      <div style={{ padding: '16px 20px', borderTop: '1px solid var(--color-sidebar-border)' }}>
+      {/* Footer — hidden on mobile */}
+      <div className="sidebar-footer">
         <p style={{ fontSize: '11px', color: 'var(--color-text-muted)', lineHeight: '1.4' }}>
           Informational use only. Not medical advice. In emergencies, contact your health worker.
         </p>

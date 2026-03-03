@@ -14,9 +14,9 @@ function App() {
   const { messages, isLoading, sendMessage } = useChat()
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', backgroundColor: 'var(--color-app-bg)' }}>
+    <div className="app-layout">
       <Sidebar currentPage={currentPage} onNavigate={setCurrentPage} />
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <main className="app-main">
         {currentPage === 'chat' && (
           <>
             <ChatWindow messages={messages} isLoading={isLoading} onSend={sendMessage} />
