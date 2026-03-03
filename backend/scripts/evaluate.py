@@ -163,7 +163,7 @@ def run_evaluation(version: str) -> dict:
 
     results = []
     for test in TEST_QUERIES:
-        print(f"  [{test['id']}/10] {test['category']}: {test['query'][:50]}...")
+        print(f"  [{test['id']}/{len(TEST_QUERIES)}] {test['category']}: {test['query'][:50]}...")
 
         response = get_agent_response(test["query"], agent)
         scores = judge_response(test["query"], test["category"], response, judge_client)
@@ -234,8 +234,8 @@ def compare_versions(v1_name: str, v2_name: str) -> None:
     v1_dim_avgs = []
     v2_dim_avgs = []
     for dim in dimensions:
-        v1_dim_avgs.append(round(sum(r["scores"].get(dim, 3) for r in v1_data["results"]) / 10, 2))
-        v2_dim_avgs.append(round(sum(r["scores"].get(dim, 3) for r in v2_data["results"]) / 10, 2))
+        v1_dim_avgs.append(round(sum(r["scores"].get(dim, 3) for r in v1_data["results"]) / len(v1_data["results"]), 2))
+        v2_dim_avgs.append(round(sum(r["scores"].get(dim, 3) for r in v2_data["results"]) / len(v2_data["results"]), 2))
 
     x2 = range(len(dimensions))
     ax2.bar([i - width / 2 for i in x2], v1_dim_avgs, width, label=v1_name, color="#93c5fd")
